@@ -1,0 +1,174 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #f9f9f9;
+    color: #393939;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 1000;
+}
+  
+.sidebar.open {
+    transform: translateX(0);
+}
+  
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+  
+.sidebar button {
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    background-color: #444;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+  
+.sidebar button:hover {
+    background-color: #555;
+}
+  
+.sidebar-handle {
+    position: fixed;
+    top: 10px;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    z-index: 1001;
+    border-top-right-radius: 20%;
+    border-bottom-right-radius: 20%;
+    transition: transform 0.3s ease-in-out;
+}
+
+html.dark-mode .sidebar, html.dark-mode .sidebar-handle {
+    background-color: #333;
+    color: white;
+}
+  
+.sidebar-handle.open {
+    transform: translateX(250px);
+}
+  
+.main-content {
+    transition: margin-left 0.3s ease-in-out;
+    margin-right: 50px;
+    margin-left: 50px;
+
+}
+  
+.main-content.shifted {
+    margin-left: 300px;
+}
+
+html.dark-mode .one, .two, .three, .four {
+    border-bottom: 1px solid #f9f9f9;
+}
+  
+.one {
+    height: 80px;
+    border-bottom: 1px solid #393939;
+}
+
+.one h3 {
+    color: #393939;
+    padding: 0;
+    padding-left: 20px;
+    font-size: 2rem;
+}
+
+html.dark-mode .one {
+    color: #f9f9f9;
+}
+
+html.dark-mode .two h4 {
+    color: #f9f9f9;
+}
+
+html.dark-mode .three h4 {
+    color: #f9f9f9;
+}
+
+html.dark-mode .four h4 {
+    color: #f9f9f9;
+}
+
+html.dark-mode .five h4 {
+    color: #f9f9f9;
+}
+
+html.dark-mode .two h3 {
+    color: #bbbbff;
+}
+
+html.dark-mode .three h3 {
+    color: #bbbbff;
+}
+
+html.dark-mode .four h3 {
+    color: #bbbbff;
+}
+
+html.dark-mode .five h3 {
+    color: #bbbbff;
+}
+
+.two {
+    height: 350px;
+    border-bottom: 1px solid #393939;
+}
+
+.two h3 {
+    color: #646cff;
+    padding-left: 20px; ;
+}
+
+.two h4 {
+    color: #393939;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.three {
+  height: 160px;
+    border-bottom: 1px solid #393939;  
+}
+
+.three h3 {
+    color: #646cff;
+    padding-left: 20px;
+}
+
+.three h4 {
+    color: #393939;
+    padding-left: 40px;
+    cursor: pointer;
+}
+ 
+.four {
+    height: 160px;
+    border-bottom: 1px solid #393939;
+}
+
+.four h3 {
+    color: #646cff;
+    padding-left: 20px;
+}
+
+.four h4 {
+    color: #393939;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.five h3 {
+    color: #646cff;
+    padding-left: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,12 @@
+.exam-taking {
+    margin: 2rem;
+  }
+  
+.question {
+  margin-bottom: 2rem;
+}
+  
+p.ans {
+  display: inline;
+  margin: 0;
+}

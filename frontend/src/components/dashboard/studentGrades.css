@@ -1,0 +1,29 @@
+.grades {
+    padding: 20px;
+}
+  
+.grades h1 {
+    margin-bottom: 20px;
+}
+  
+.grades table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+.grades th,
+.grades td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+  
+.grades th {
+    background-color: #f2f2f2;
+}
+
+html.dark-mode .grades th {
+    background-color: #393939;
+    color: #f9f9f9;
+}
+  

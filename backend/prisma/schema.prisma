@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userID Int @default(autoincrement()) @id
+  firstName String
+  lastName String
+  email String @unique
+  username String @unique
+  password String
+  role String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  teacher Teacher?
+  student Student?
+}
+
+model Teacher {
+  teacherID Int @default(autoincrement()) @id
+  user User @relation(fields: [teacherID], references: [userID])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  teachings Teaching[]
+}
+
+model Student {
+  studentID Int @default(autoincrement()) @id
+  user User @relation(fields: [studentID], references: [userID])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  enrollments Enrollment[]
+  submissions Submission[]
+  answers StudentAnswer[]
+  grades Grade[]
+}
+
+
+model Course {
+  courseID Int @default(autoincrement()) @id
+  courseName String
+  courseDescription String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  exams Exam[]
+  sections Section[]
+}
+
+model Section {
+  sectionID Int @default(autoincrement()) @id
+  sectionName String
+  courseID Int
+  semester String
+  year Int
+  days String
+  startTime DateTime
+  endTime DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  course Course @relation(fields: [courseID], references: [courseID])
+  assignments Assignment[]
+  enrollments Enrollment[]
+  teachings Teaching[]
+}
+
+model Enrollment {
+  enrollmentID Int @default(autoincrement()) @id
+  studentID Int
+  sectionID Int
+  enrollmentDate DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  student Student @relation(fields: [studentID], references: [studentID])
+  section Section @relation(fields: [sectionID], references: [sectionID])
+
+  @@unique([studentID, sectionID])
+}
+
+model Teaching {
+  teachingID Int @default(autoincrement()) @id
+  teacherID Int
+  sectionID Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  teacher Teacher @relation(fields: [teacherID], references: [teacherID])
+  section Section @relation(fields: [sectionID], references: [sectionID])
+
+  @@unique([teacherID, sectionID])
+}
+
+model Assignment {
+  assignmentID Int @default(autoincrement()) @id
+  assignmentName String
+  assignmentDescription String
+  sectionID Int
+  dueDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  section Section @relation(fields: [sectionID], references: [sectionID])
+  submissions Submission[]
+  grades Grade[]
+}
+
+model Submission {
+  submissionID Int @default(autoincrement()) @id
+  assignmentID Int
+  studentID Int
+  submissionDate DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  assignment Assignment @relation(fields: [assignmentID], references: [assignmentID])
+  student Student @relation(fields: [studentID], references: [studentID])
+
+  @@unique([assignmentID, studentID])
+}
+
+model Grade {
+  gradeID Int @default(autoincrement()) @id
+  studentID Int
+  grade Int
+  type String
+  assignmentID Int?
+  examID Int?
+  released Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  student Student @relation(fields: [studentID], references: [studentID])
+  assignment Assignment? @relation(fields: [assignmentID], references: [assignmentID])
+  exam Exam? @relation(fields: [examID], references: [examID])
+}
+
+model Exam {
+  examID Int @default(autoincrement()) @id
+  courseID Int
+  examName String
+  examDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  course Course @relation(fields: [courseID], references: [courseID])
+  questions Question[]
+  sessions Session[]
+  grades Grade[]
+}
+
+model Question {
+  questionID Int @default(autoincrement()) @id
+  examID Int
+  questionText String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  exam Exam @relation(fields: [examID], references: [examID])
+  answers Answer[]
+}
+
+model Answer {
+  answerID Int @default(autoincrement()) @id
+  questionID Int
+  answerText String
+  isCorrect Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  question Question @relation(fields: [questionID], references: [questionID])
+  studentAnswers StudentAnswer[]
+}
+
+model Session {
+  sessionID Int @default(autoincrement()) @id
+  examID Int
+  startTime DateTime
+  endTime DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  exam Exam @relation(fields: [examID], references: [examID])
+  studentAnswers StudentAnswer[]
+}
+
+model StudentAnswer {
+  studentAnswerID Int @default(autoincrement()) @id
+  answerID Int
+  sessionID Int
+  studentID Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  answer Answer @relation(fields: [answerID], references: [answerID])
+  session Session @relation(fields: [sessionID], references: [sessionID])
+  student Student @relation(fields: [studentID], references: [studentID])
+}

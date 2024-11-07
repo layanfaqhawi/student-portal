@@ -1,0 +1,90 @@
+* {
+    color: #333;
+}
+
+.view {
+    border-radius: 10px;
+    padding: 0;
+    width: 27rem;
+    height: 32rem;
+    margin: 3rem;
+    overflow: auto;
+    border: 2px solid #ccc;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border-radius: 10px 10px 0 0 ;
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ccc;
+}
+
+.header .title {
+    display: inline;
+}
+
+.header h1 {
+    margin: 0;
+    padding: 1rem;
+    font-size: 1.7rem;
+}
+
+.exam-item {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding: 1rem;
+    margin: 0 0;
+    background-color: #f9f9f9;
+    height: 4rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.exam-date {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 20px;
+    background-color: #666;
+    font-size: 1.1rem;
+    color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.btn {
+    padding: 0.3em 0.6em;
+    font-size: 0.7em;
+    font-weight: 500;
+    font-family: inherit;
+    transition: border-color 0.25s;
+    background-color: #f9f9f9;
+}
+
+html.dark-mode .view {
+    background-color: #393939;
+    color: #e0e0e0;
+}
+
+html.dark-mode .header {
+    background-color: #393939;
+    color: #e0e0e0;
+}
+
+html.dark-mode .exam-item {
+    background-color: #393939;
+    color: #e0e0e0;
+}
+
+html.dark-mode .exam-date {
+    background-color: #646cff;
+    color: #e0e0e0;
+}

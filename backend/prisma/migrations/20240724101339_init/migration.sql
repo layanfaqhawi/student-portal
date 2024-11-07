@@ -1,0 +1,178 @@
+-- CreateTable
+CREATE TABLE "Student" (
+    "studentID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Teacher" (
+    "teacherID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Course" (
+    "courseID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "courseName" TEXT NOT NULL,
+    "courseDescription" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "Section" (
+    "sectionID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "sectionName" TEXT NOT NULL,
+    "courseID" INTEGER NOT NULL,
+    "semester" TEXT NOT NULL,
+    "year" INTEGER NOT NULL,
+    "days" TEXT NOT NULL,
+    "startTime" DATETIME NOT NULL,
+    "endTime" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Section_courseID_fkey" FOREIGN KEY ("courseID") REFERENCES "Course" ("courseID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Enrollment" (
+    "enrollmentID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "studentID" INTEGER NOT NULL,
+    "sectionID" INTEGER NOT NULL,
+    "enrollmentDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Enrollment_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "Student" ("studentID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Enrollment_sectionID_fkey" FOREIGN KEY ("sectionID") REFERENCES "Section" ("sectionID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Teaching" (
+    "teachingID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "teacherID" INTEGER NOT NULL,
+    "sectionID" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Teaching_teacherID_fkey" FOREIGN KEY ("teacherID") REFERENCES "Teacher" ("teacherID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Teaching_sectionID_fkey" FOREIGN KEY ("sectionID") REFERENCES "Section" ("sectionID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Assignment" (
+    "assignmentID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "assignmentName" TEXT NOT NULL,
+    "assignmentDescription" TEXT NOT NULL,
+    "sectionID" INTEGER NOT NULL,
+    "dueDate" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Assignment_sectionID_fkey" FOREIGN KEY ("sectionID") REFERENCES "Section" ("sectionID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Submission" (
+    "submissionID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "assignmentID" INTEGER NOT NULL,
+    "studentID" INTEGER NOT NULL,
+    "submissionDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Submission_assignmentID_fkey" FOREIGN KEY ("assignmentID") REFERENCES "Assignment" ("assignmentID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Submission_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "Student" ("studentID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Grade" (
+    "gradeID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "studentID" INTEGER NOT NULL,
+    "grade" INTEGER NOT NULL,
+    "type" TEXT NOT NULL,
+    "assignmentID" INTEGER,
+    "examID" INTEGER,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Grade_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "Student" ("studentID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Grade_assignmentID_fkey" FOREIGN KEY ("assignmentID") REFERENCES "Assignment" ("assignmentID") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Grade_examID_fkey" FOREIGN KEY ("examID") REFERENCES "Exam" ("examID") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Exam" (
+    "examID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "courseID" INTEGER NOT NULL,
+    "examName" TEXT NOT NULL,
+    "examDate" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Exam_courseID_fkey" FOREIGN KEY ("courseID") REFERENCES "Course" ("courseID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Question" (
+    "questionID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "examID" INTEGER NOT NULL,
+    "questionText" TEXT NOT NULL,
+    "questionType" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Question_examID_fkey" FOREIGN KEY ("examID") REFERENCES "Exam" ("examID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Answer" (
+    "answerID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "questionID" INTEGER NOT NULL,
+    "answerText" TEXT NOT NULL,
+    "isCorrect" BOOLEAN NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Answer_questionID_fkey" FOREIGN KEY ("questionID") REFERENCES "Question" ("questionID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "sessionID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "examID" INTEGER NOT NULL,
+    "startTime" DATETIME NOT NULL,
+    "endTime" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Session_examID_fkey" FOREIGN KEY ("examID") REFERENCES "Exam" ("examID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "StudentAnswer" (
+    "studentAnswerID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "answerID" INTEGER NOT NULL,
+    "sessionID" INTEGER NOT NULL,
+    "studentID" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "StudentAnswer_answerID_fkey" FOREIGN KEY ("answerID") REFERENCES "Answer" ("answerID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "StudentAnswer_sessionID_fkey" FOREIGN KEY ("sessionID") REFERENCES "Session" ("sessionID") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "StudentAnswer_studentID_fkey" FOREIGN KEY ("studentID") REFERENCES "Student" ("studentID") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Student_email_key" ON "Student"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Student_username_key" ON "Student"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Teacher_email_key" ON "Teacher"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Teacher_username_key" ON "Teacher"("username");
