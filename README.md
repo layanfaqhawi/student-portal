@@ -1,18 +1,18 @@
 # Student Portal
 
 ## Project Description
-The Student Portal is a web application that serves as a centralized platform for university students and teachers. It enables students to access course materials, take exams, and view grades, while teachers can create exams, upload course resources, and manage students’ performance.
+The Student Portal is a web application designed to provide a centralized platform for university students and faculty. Students can access courses, take exams, and view grades, while teachers can create exams, upload resources, and manage student performance.
 
 ## Features
-- **User Roles**: Separate login and functionalities for students and teachers.
-- **Course and Resource Management**: Teachers can upload course materials, and students can access these resources.
-- **Exam Management**: Teachers create multiple-choice exams, and students can participate in these exams.
-- **Student Performance Tracking**: Teachers can view grades and track student progress across different exams.
+- **User Roles**: Separate roles for students and teachers with distinct functionalities.
+- **Course Material Access**: Teachers can upload resources, and students can access these materials for their enrolled courses.
+- **Exam Management**: Teachers create multiple-choice exams, and students can take exams and view their grades.
+- **Student Performance Tracking**: Teachers can monitor student progress across different exams and courses.
 
 ## Technologies Used
 - **Backend**: NestJS for RESTful APIs
-- **Frontend**: Vite, React, TypeScript for responsive and interactive interfaces
-- **Database**: Prisma with PostgreSQL for managing relational data
+- **Frontend**: Vite, React, TypeScript for a responsive and interactive interface
+- **Database**: Prisma ORM with SQLite for data management
 
 ## Setup & Installation
 1. **Clone the repository**:
