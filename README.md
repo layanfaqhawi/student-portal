@@ -1,11 +1,10 @@
 # Student Portal
 
 ## Project Description
-The Student Portal is a web application designed to provide a centralized platform for university students and faculty. Students can access courses, take exams, and view grades, while teachers can create exams, upload resources, and manage student performance.
+The Student Portal is a web application designed to provide a centralized platform for university students and faculty. Students can access courses, take exams, and view grades, while teachers can create exams and manage student performance.
 
 ## Features
 - **User Roles**: Separate roles for students and teachers with distinct functionalities.
-- **Course Material Access**: Teachers can upload resources, and students can access these materials for their enrolled courses.
 - **Exam Management**: Teachers create multiple-choice exams, and students can take exams and view their grades.
 - **Student Performance Tracking**: Teachers can monitor student progress across different exams and courses.
 
